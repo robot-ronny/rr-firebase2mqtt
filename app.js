@@ -28,13 +28,12 @@ admin.initializeApp({
 });
 
 var ref = admin.database().ref("/commands/go");
-
 ref.on("value", snapshot => {
   if (once_recieved) {
     var recieved_data = snapshot.val();
     var message = JSON.stringify({"interval": parseInt(recieved_data.value), "speed": 100});
-    client.publish("ronny/go/{recieved_data.direction}", message);
-    console.log("Message send to MQTT broker " + message)
+    client.publish(`ronny/go/${recieved_data.direction}`, message);
+    console.log(`Message send to MQTT broker ${message}`)
   }
 
   else {
